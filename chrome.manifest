@@ -1,0 +1,6 @@
+content   sampledbg                 chrome/content/
+skin      sampledbg   classic/1.0   chrome/skin/
+locale    sampledbg   en-US         chrome/locale/en-US/
+
+
+overlay   chrome://browser/content/browser.xul   chrome://sampledbg/content/ff-overlay.xul

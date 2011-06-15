@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay SYSTEM "chrome://sampledbg/locale/overlay.dtd">
+<overlay id="debugactorsample-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="debugactorsample-strings" src="chrome://sampledbg/locale/overlay.properties"/>
+  </stringbundleset>
+</overlay>

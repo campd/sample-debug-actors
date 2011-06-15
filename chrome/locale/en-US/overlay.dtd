@@ -1,0 +1,8 @@
+<!ENTITY debugactorsample.label "Your localized menuitem">
+<!ENTITY debugactorsampleContext.label "Your Menuitem">
+<!ENTITY debugactorsampleContext.accesskey "Y">
+<!ENTITY debugactorsampleToolbarButton.label "Your Toolbar Button">
+<!ENTITY debugactorsampleToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY debugactorsampleSidebar.label "Your Sidebar">
+<!ENTITY debugactorsampleToolbar.name  "example">
+<!ENTITY debugactorsampleToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &debugactorsampleToolbar.name;">
