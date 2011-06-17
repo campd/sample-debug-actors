@@ -1,11 +1,12 @@
-var gSerialNumber = 0
+var gSerialNumber = 0;
 
 /*======================
  * Tab-lifetime actor.
  */
 
-function SampleTabActor(aConnection, aTab) {
-  this.conn = aConnection;
+function SampleTabActor(aTab)
+{
+  this.conn = aTab.conn;
   this.tab = aTab;
   this.serial = gSerialNumber++;
 }
@@ -33,7 +34,7 @@ SampleTabActor.prototype = {
   onPing: function(aRequest) {
     // The "from" attribute is not provided, the protocol handler will
     // add that for us.
-    return { "pong": this.serial }
+    return { "pong": this.serial };
   },
 
   /**
@@ -42,6 +43,9 @@ SampleTabActor.prototype = {
    * closed.
    */
   disconnect: function() {
+    // Remove our tab actor property so that we don't
+    // return ourselves again from the request handler.
+    delete aTab._sampleTabActor;
   },
 };
 
@@ -53,29 +57,32 @@ SampleTabActor.prototype.requestTypes = {
 };
 
 /**
- * A factory for creating tab-lifetime actors.
- *
- * The factory function is handed a connection, a tab-lifetime actor
- * pool, and the browser tab element.  In most
- * cases you'll want to add the actor to the provided actor pool.
+ * The request handler for "sampleTabActor". Adds its actor to the tab
+ * actor's tabActorPool, which will last as long as the actor.
  */
-function sampleTabActorFactory(aConnection, aPool, aTab) {
-  let actor = new SampleTabActor(aConnection, aTab);
-  aPool.addActor(actor);
-  return actor;
+function sampleTabActorHandler(aTab, aRequest) {
+  // Reuse a previously-created actor, if any.
+  if (aTab._sampleTabActor) {
+    return aTab.sampleTabActor;
+  }
+  let actor = new SampleTabActor(aTab);
+  aTab._sampleTabActor = actor;
+  aTab.tabActorPool.addActor(actor);
+  return actor.grip();
 }
 
 /*
  * The first parameter is the name of the request type that will be
  * used by clients to fetch the actor. */
-DebuggerServer.tabActorFactory("sampleTabActor", sampleTabActorFactory);
+DebuggerServer.addTabRequest("sampleTabActor", sampleTabActorHandler);
 
 /*=========================
  * Context-lifetime actor.
  */
 
-function SampleContextActor(aConnection, aTab) {
-  this.conn = aConnection;
+function SampleContextActor(aTab)
+{
+  this.conn = aTab.conn;
   this.tab = aTab;
   this.serial = gSerialNumber++;
 }
@@ -112,6 +119,9 @@ SampleContextActor.prototype = {
    * navigated.
    */
   disconnect: function() {
+    // Remove our context actor property so that we don't return
+    // ourselves again from the request handler.
+    delete aTab._sampleTabActor;
   },
 };
 
@@ -123,19 +133,22 @@ SampleContextActor.prototype.requestTypes = {
 };
 
 /**
- * A factory for creating context-lifetime actors.
- *
- * The factory function is handed a connection, a context-lifetime actor
- * pool, and the browser tab element.  In most
- * cases you'll want to add the actor to the provided actor pool.
+ * The request handler for "sampleContextActor". Adds its actor to the tab
+ * actor's contextActorPool, which will last until the next navigation
+ * or the tab is closed.
  */
-function sampleContextActorFactory(aConnection, aPool, aTab) {
-  let actor = new SampleContextActor(aConnection, aTab);
-  aPool.addActor(actor);
-  return actor;
+function sampleContextActorHandler(aTab, aRequest) {
+  // Reuse a previously-created actor, if any.
+  if (aTab._sampleContextActor) {
+    return aTab.sampleContextActor;
+  }
+  let actor = new SampleContextActor(aTab);
+  aTab._sampleContextActor = actor;
+  aTab.contextActorPool.addActor(actor);
+  return actor.grip();
 }
 
 /*
  * The first parameter is the name of the request type that will be
  * used by clients to fetch the actor. */
-DebuggerServer.contextActorFactory("sampleContextActor", sampleContextActorFactory);
+DebuggerServer.addTabRequest("sampleContextActor", sampleContextActorHandler);
