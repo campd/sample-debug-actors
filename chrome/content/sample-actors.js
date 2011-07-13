@@ -63,7 +63,7 @@ SampleTabActor.prototype.requestTypes = {
 function sampleTabActorHandler(aTab, aRequest) {
   // Reuse a previously-created actor, if any.
   if (aTab._sampleTabActor) {
-    return aTab.sampleTabActor;
+    return aTab._sampleTabActor;
   }
   let actor = new SampleTabActor(aTab);
   aTab._sampleTabActor = actor;
@@ -140,7 +140,7 @@ SampleContextActor.prototype.requestTypes = {
 function sampleContextActorHandler(aTab, aRequest) {
   // Reuse a previously-created actor, if any.
   if (aTab._sampleContextActor) {
-    return aTab.sampleContextActor;
+    return aTab._sampleContextActor;
   }
   let actor = new SampleContextActor(aTab);
   aTab._sampleContextActor = actor;
