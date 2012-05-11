@@ -74,7 +74,7 @@ function sampleTabActorHandler(aTab, aRequest) {
 /*
  * The first parameter is the name of the request type that will be
  * used by clients to fetch the actor. */
-DebuggerServer.addTabRequest("sampleTabActor", sampleTabActorHandler);
+DebuggerServer.addTabActor("sampleTabActor", SampleTabActor);
 
 /*=========================
  * Context-lifetime actor.
@@ -151,4 +151,4 @@ function sampleContextActorHandler(aTab, aRequest) {
 /*
  * The first parameter is the name of the request type that will be
  * used by clients to fetch the actor. */
-DebuggerServer.addTabRequest("sampleContextActor", sampleContextActorHandler);
+DebuggerServer.addTabActor("sampleContextActor", SampleContextActor);

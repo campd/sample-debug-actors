@@ -1,4 +1,4 @@
-Cu.import("resource:///modules/dbg-server.jsm");
+Cu.import("resource://gre/modules/devtools/dbg-server.jsm");
 
 var DebuggerSample = {
   onLoad: function() {

@@ -4,7 +4,7 @@
 const Cc = Components.classes;
 const Cu = Components.utils;
 
-Cu.import("resource:///modules/dbg-client.jsm");
+Cu.import("resource://gre/modules/devtools/dbg-client.jsm");
 
 var gTransport = null;
 var gQuit = false;
