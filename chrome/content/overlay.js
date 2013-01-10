@@ -1,10 +1,11 @@
-Cu.import("resource:///modules/dbg-server.jsm");
+Cu.import("resource://gre/modules/devtools/dbg-server.jsm");
 
 var DebuggerSample = {
   onLoad: function() {
     // Initialize the browser debugger.
     if (!DebuggerServer.initialized) {
-      DebuggerServer.init();
+      // Allow remote connections.
+      DebuggerServer.init(function () { return true; });
       DebuggerServer.addBrowserActors();
     }
 
